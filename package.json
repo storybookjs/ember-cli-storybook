@@ -1,27 +1,31 @@
 {
-  "name": "ember-storybook",
+  "name": "ember-cli-storybook",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "📒 Ember storybook adapter",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-cli-storybook"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielcsapo/ember-cli-storybook.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Gabriel J. Csapo <gabecsapo@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gabrielcsapo/ember-cli-storybook/issues"
+  },
+  "homepage": "https://github.com/gabrielcsapo/ember-cli-storybook#readme",
   "directories": {
-    "doc": "doc",
+    "lib": "lib",
     "test": "tests"
   },
   "scripts": {
     "build": "ember build",
-    "lint:hbs": "ember-template-lint .",
-    "lint:js": "eslint .",
+    "lint": "eslint .",
     "start": "ember serve",
-    "test": "ember test",
+    "test": "tape node-tests/**.js",
     "test:all": "ember try:each"
-  },
-  "dependencies": {
-    "ember-cli-babel": "^6.16.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
@@ -48,12 +52,17 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.7.1"
+    "qunit-dom": "^0.7.1",
+    "tape": "^4.9.1"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "ember-cli-babel": "^7.1.2"
   }
 }
