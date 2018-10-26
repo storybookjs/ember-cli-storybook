@@ -8,8 +8,17 @@ const { parse, generatePreviewHead } = require('./util');
 module.exports = {
   name: 'ember-cli-storybook',
 
-  postBuild: function() {
-    const { name } = require(path.resolve(process.cwd(), 'package.json'));
+  outputReady: function() {
+    if (!this.app) {
+      // You will need ember-cli >= 1.13 to use ember-cli-deploy's postBuild integration.
+      // This is because prior to 1.13, `this.app` is not available in the outputReady hook.
+      this.ui.writeLine('please upgrade to ember-cli >= 1.13')
+      return;
+    }
+
+    const { name } = this.app;
+    const { storybook={} } = this.app.project.pkg;
+    const { ignoreTestFiles=true } = storybook;
 
     const distFilePath = path.resolve(process.cwd(), 'dist/index.html');
     const testFilePath = path.resolve(process.cwd(), 'dist/tests/index.html');
@@ -30,7 +39,7 @@ module.exports = {
       this.ui.writeLine('Parsing dist/index.html');
     }
 
-    const parsedConfig = parse(fileContents);
+    const parsedConfig = parse(fileContents, ignoreTestFiles);
 
     this.ui.writeLine('Generating preview-head.html');
 

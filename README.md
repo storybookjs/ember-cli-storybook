@@ -16,6 +16,14 @@ Usage
 This will be triggered automatically as a post build action when running `ember build`
 
 
+> package.json options (defaults)
+
+```json
+"storybook": {
+  "ignoreTestFiles": true
+}
+```
+
 License
 ------------------------------------------------------------------------------
 

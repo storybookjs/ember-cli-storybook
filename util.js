@@ -1,21 +1,24 @@
 const cheerio = require('cheerio');
 
 const lookupTable = {
-  meta: {
+  meta: [{
     selector: 'meta[name*="/config/environment"]',
     attributes: ['name', 'content']
-  },
-  link: {
+  }, {
+    selector: 'meta[id]',
+    attributes: ['name', 'content', 'id']
+  }],
+  link: [{
     selector: 'link',
     attributes: ['rel', 'href']
-  },
-  script: {
+  }],
+  script: [{
     selector: 'script',
     attributes: ['src']
-  }
+  }]
 };
 
-function getDocumentValues($, selector, attributes=[]) {
+function getDocumentValues($, selector, attributes=[], ignoreRegexs=[]) {
   let $tags = $(selector);
   let config = [];
 
@@ -25,11 +28,17 @@ function getDocumentValues($, selector, attributes=[]) {
     var data = attributes.reduce(function(data, attribute) {
       const value = $tag.attr(attribute);
 
-      if(value) {
+      let ignored = false;
+
+      if(value && !ignoreRegexs.find((regex) => {
+        return regex.exec(value)
+      })) {
         data[attribute] = value
+      } else {
+        ignored = true;
       }
 
-      return data;
+      return ignored ? {} : data;
     }, {})
 
     if(Object.keys(data).length > 0) {
@@ -40,15 +49,25 @@ function getDocumentValues($, selector, attributes=[]) {
   return config;
 }
 
-function parse(data) {
+function parse(data, ignoreTestFiles) {
+  const ignoreRegexs = ignoreTestFiles ? [/assets\/test/] : []
+
   var $ = cheerio.load(data);
   var json = {};
 
   for(var prop in lookupTable) {
     var value = lookupTable[prop];
 
-    if ('selector' in value && ('attributes' in value || 'includeContent' in value)) {
-      json[prop] = getDocumentValues($, value.selector, value.attributes, value.includeContent, value.includeHtmlContent);
+    for (var selector of value) {
+      const tagsFound = getDocumentValues($, selector.selector, selector.attributes, ignoreRegexs);
+
+      // if we have multiple selectors for a certain block
+      // we need to make sure we don't just set the array every time
+      if(json[prop]) {
+        json[prop] = json[prop].concat(tagsFound)
+      } else {
+        json[prop] = tagsFound;
+      }
     }
   }
 

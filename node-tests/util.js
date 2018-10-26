@@ -60,6 +60,38 @@ test('@parse', (t) => {
       ]
     });
   });
+
+  t.test('should be able to parse built html file and strip out test related files', (t) => {
+    t.plan(1);
+
+    const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'build.html'), 'utf8');
+
+    t.deepEqual(parse(fileContent, true), {
+      meta: [{
+        name: 'storybook-ember-3-1/config/environment',
+        content: '%7B%22modulePrefix%22%3A%22storybook-ember-3-1%22%2C%22environment%22%3A%22test%22%2C%22rootURL%22%3A%22/%22%2C%22locationType%22%3A%22none%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22LOG_ACTIVE_GENERATION%22%3Afalse%2C%22LOG_VIEW_LOOKUPS%22%3Afalse%2C%22rootElement%22%3A%22%23ember-testing%22%2C%22autoboot%22%3Afalse%2C%22name%22%3A%22storybook-ember-3-1%22%2C%22version%22%3A%220.0.0+eebe77e5%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D'
+      }],
+      link: [{
+          rel: 'stylesheet',
+          href: '/assets/vendor.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: '/assets/storybook-ember-3-1.css'
+        }
+      ],
+      script: [{
+          src: '/testem.js'
+        },
+        {
+          src: '/assets/vendor.js'
+        },
+        {
+          src: '/assets/storybook-ember-3-1.js'
+        }
+      ]
+    });
+  });
 });
 
 test('@generatePreviewHead', (t) => {
