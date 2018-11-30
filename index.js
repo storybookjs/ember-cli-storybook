@@ -14,10 +14,13 @@ module.exports = {
       // This is because prior to 1.13, `this.app` is not available in the outputReady hook.
       this.ui.writeLine('please upgrade to ember-cli >= 1.13')
       return;
+    } else if (this.app.env == 'test') {
+      this.ui.writeLine('Skipping storybook for test environment.');
+      return;
     }
 
     const { name } = this.app;
-    const { storybook={} } = this.app.project.pkg;
+    const { storybook = {} } = this.app.project.pkg;
     const { ignoreTestFiles=true } = storybook;
 
     const distFilePath = path.resolve(process.cwd(), 'dist/index.html');
