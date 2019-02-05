@@ -1,3 +1,7 @@
+# 0.1.0 (02/05/2019)
+
+- [enables blueprints](https://github.com/storybooks/ember-cli-storybook/pull/3)
+
 # 0.0.1 (10/26/2018)
 
 - Ensures dist is available by using outputReady instead of postBuild
