@@ -1,5 +1,5 @@
 {
-  "name": "ember-cli-storybook",
+  "name": "@storybook/ember-cli-storybook",
   "version": "0.1.0",
   "description": "📒 Ember storybook adapter",
   "keywords": [
