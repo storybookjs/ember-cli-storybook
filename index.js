@@ -8,7 +8,7 @@ const { parse, generatePreviewHead } = require('./util');
 module.exports = {
   name: 'ember-cli-storybook',
 
-  outputReady: function() {
+  outputReady: function(result) {
     if (!this.app) {
       // You will need ember-cli >= 1.13 to use ember-cli-deploy's postBuild integration.
       // This is because prior to 1.13, `this.app` is not available in the outputReady hook.
@@ -20,8 +20,8 @@ module.exports = {
     const { storybook={} } = this.app.project.pkg;
     const { ignoreTestFiles=true } = storybook;
 
-    const distFilePath = path.resolve(process.cwd(), 'dist/index.html');
-    const testFilePath = path.resolve(process.cwd(), 'dist/tests/index.html');
+    const distFilePath = path.resolve(result.directory, 'index.html');
+    const testFilePath = path.resolve(result.directory, 'tests/index.html');
     const previewHeadFilePath = path.resolve(process.cwd(), '.storybook/preview-head.html');
     const envFilePath = path.resolve(process.cwd(), '.env');
 
@@ -32,11 +32,11 @@ module.exports = {
     if(fs.existsSync(testFilePath)) {
       fileContents = fs.readFileSync(testFilePath);
 
-      this.ui.writeLine('Parsing dist/tests/index.html');
+      this.ui.writeLine(`Parsing ${testFilePath}`);
     } else {
       fileContents = fs.readFileSync(distFilePath);
 
-      this.ui.writeLine('Parsing dist/index.html');
+      this.ui.writeLine(`Parsing ${distFilePath}`);
     }
 
     const parsedConfig = parse(fileContents, ignoreTestFiles);
