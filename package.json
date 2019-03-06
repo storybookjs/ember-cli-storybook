@@ -59,7 +59,8 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "defaultBlueprint": "ember-cli-storybook"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
