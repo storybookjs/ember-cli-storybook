@@ -61,6 +61,43 @@ test('@parse', (t) => {
     });
   });
 
+
+  t.test('should strip rootURL found in config href and src attributes', (t) => {
+    t.plan(1);
+
+    const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'root-url.html'), 'utf8');
+
+    t.deepEqual(parse(fileContent), {
+      meta: [{
+        name: 'vault/config/environment',
+        content: '%7B%22modulePrefix%22%3A%22vault%22%2C%22environment%22%3A%22development%22%2C%22rootURL%22%3A%22/ui/%22%2C%22locationType%22%3A%22auto%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22POLLING_URLS%22%3A%5B%22sys/health%22%2C%22sys/replication/status%22%2C%22sys/seal-status%22%5D%2C%22NAMESPACE_ROOT_URLS%22%3A%5B%22sys/health%22%2C%22sys/seal-status%22%2C%22sys/license/features%22%5D%2C%22DEFAULT_PAGE_SIZE%22%3A15%2C%22LOG_TRANSITIONS%22%3Atrue%7D%2C%22flashMessageDefaults%22%3A%7B%22timeout%22%3A7000%2C%22sticky%22%3Afalse%2C%22preventDuplicates%22%3Atrue%7D%2C%22contentSecurityPolicyHeader%22%3A%22Content-Security-Policy%22%2C%22contentSecurityPolicyMeta%22%3Atrue%2C%22contentSecurityPolicy%22%3A%7B%22connect-src%22%3A%5B%22%27self%27%22%5D%2C%22img-src%22%3A%5B%22%27self%27%22%2C%22data%3A%22%5D%2C%22form-action%22%3A%5B%22%27none%27%22%5D%2C%22script-src%22%3A%5B%22%27self%27%22%5D%2C%22style-src%22%3A%5B%22%27unsafe-inline%27%22%2C%22%27self%27%22%5D%2C%22default-src%22%3A%5B%22%27none%27%22%5D%2C%22font-src%22%3A%5B%22%27self%27%22%5D%2C%22media-src%22%3A%5B%22%27self%27%22%5D%7D%2C%22emberData%22%3A%7B%22enableRecordDataRFCBuild%22%3Afalse%7D%2C%22exportApplicationGlobal%22%3Atrue%7D' }],
+      link: [{
+          rel: 'stylesheet',
+          href: '/assets/vendor.css'
+        },
+        {
+          rel: 'stylesheet',
+          href: '/assets/vault.css'
+        },
+        {
+          rel: 'icon',
+          href: '/favicon.png'
+        }
+      ],
+      script: [
+        {
+          src: '/ember-cli-live-reload.js'
+        },
+        {
+          src: '/assets/vendor.js'
+        },
+        {
+          src: '/assets/vault.js'
+        },
+      ]
+    });
+  });
+
   t.test('should be able to parse built html file and strip out test related files', (t) => {
     t.plan(1);
 
