@@ -5,6 +5,9 @@ const lookupTable = {
     selector: 'meta[name*="/config/environment"]',
     attributes: ['name', 'content']
   }, {
+    selector: 'meta[name*="/config/asset-manifest"]',
+    attributes: ['name', 'content']
+  }, {
     selector: 'meta[id]',
     attributes: ['name', 'content', 'id']
   }],
