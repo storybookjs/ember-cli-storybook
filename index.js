@@ -6,7 +6,7 @@ const path = require('path');
 const { parse, generatePreviewHead } = require('./util');
 
 module.exports = {
-  name: 'ember-cli-storybook',
+  name: '@storybook/ember-cli-storybook',
 
   outputReady: function(result) {
     if (!this.app) {
