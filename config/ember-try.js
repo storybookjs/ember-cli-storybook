@@ -4,7 +4,7 @@ const getChannelURL = require('ember-source-channel-url');
 
 module.exports = async function() {
   return {
-    command: 'mkdir .storybook && ember build',
+    command: 'mkdir .storybook && npm run build-storybook',
     scenarios: [
       {
         name: 'ember-lts-3.4',

@@ -22,6 +22,7 @@
   },
   "scripts": {
     "build": "ember build",
+    "build-storybook": "ember build && build-storybook -s dist",
     "lint": "eslint .",
     "start": "ember serve",
     "test": "tape node-tests/**.js",
