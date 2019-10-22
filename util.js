@@ -123,12 +123,11 @@ function generatePreviewHead(parsedConfig) {
           </script>`);
           continue;
         }
-        if(value.src.indexOf('assets/vendor.js') > -1) {
-          // make sure we push this before vendor gets loaded to ensure the application does not bind to the window
-          doc.push('<script>runningTests = true;</script>');
-        }
-
         doc.push(`<${key} ${objectToHTMLAttributes(value)}></${key}>`);
+        if(value.src.indexOf('assets/vendor.js') > -1) {
+          // make sure we push this right after vendor to ensure the application does not bind to the window. 
+          doc.push('<script>runningTests = true; Ember.testing=true;</script>');
+        }
       } else {
         doc.push(`<${key} ${objectToHTMLAttributes(value)} />`);
       }
