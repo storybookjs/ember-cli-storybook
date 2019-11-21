@@ -1,3 +1,7 @@
+# 0.1.1 (02/05/2019)
+
+- [Fix rootUrl path replace](https://github.com/storybookjs/ember-cli-storybook/pull/13)
+
 # 0.1.0 (02/05/2019)
 
 - [enables blueprints](https://github.com/storybooks/ember-cli-storybook/pull/3)
