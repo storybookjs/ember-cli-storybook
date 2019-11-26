@@ -2,11 +2,50 @@
 
 const fs = require('fs');
 const path = require('path');
-
+const DocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
+const Funnel = require('broccoli-funnel');
+const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead } = require('./util');
 
 module.exports = {
   name: 'ember-cli-storybook',
+
+  isDevelopingAddon: function() {
+    return true;
+  },
+
+  _getOptions() {
+    // TODO probably want some options here
+    return {};
+  },
+
+  postprocessTree(type, appTree) {
+    this._super.postprocessTree.apply(this, arguments);
+    let options = this._getOptions();
+
+    if (type !== 'all' || options.autoDocEnabled === false) {
+      return appTree;
+    }
+
+    let yuiDocOptions = this.app.options['ember-cli-addon-docs-yuidoc'] || {};
+
+    // TODO: we want to fix this so you can pass in what packages you want to document,
+    // not have it specific to app/
+    let appJS = new Funnel('app', {
+      include: ['**/components/*.js']
+    });
+    let docsTree = new DocsGenerator([appJS], {
+      project: this.project,
+      destDir: 'docs',
+      packages: yuiDocOptions.packages || [ this.project.name() ]
+
+    });
+
+    return mergeTrees([
+      appTree,
+      docsTree,
+    ]);
+  },
 
   outputReady: function(result) {
     if (!this.app) {
