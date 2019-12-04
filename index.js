@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const DocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
+const YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
 const Funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead } = require('./util');
@@ -10,40 +10,48 @@ const { parse, generatePreviewHead } = require('./util');
 module.exports = {
   name: 'ember-cli-storybook',
 
-  isDevelopingAddon: function() {
-    return true;
+  _getOptions() {
+    let addonOptions = (this.parent && this.parent.options) || (this.app && this.app.options) || {};
+    return addonOptions[this.name] || {};
   },
 
-  _getOptions() {
-    // TODO probably want some options here
-    return {};
-  },
+  included(app) {
+    this._super.included.apply(this, arguments);
+
+    // see: https://github.com/ember-cli/ember-cli/issues/3718
+    if (typeof app.import !== 'function' && app.app) {
+      app = app.app;
+    }
+
+    this.app = app;
+ },
 
   postprocessTree(type, appTree) {
     this._super.postprocessTree.apply(this, arguments);
     let options = this._getOptions();
+    let componentFilePathPatterns = options.componentFilePathPatterns || ['app/components/*.js', 'lib/**/addon/components/*.js'];
 
-    if (type !== 'all' || options.autoDocEnabled === false) {
+    if (type !== 'all') {
       return appTree;
     }
 
-    let yuiDocOptions = this.app.options['ember-cli-addon-docs-yuidoc'] || {};
+    if (type === 'all' && options.autoDocEnabled === false) {
+      this.ui.write('ember-cli-storybook is not generating json documentation: autoDocEnabled was false.');
+      return appTree;
+    }
 
-    // TODO: we want to fix this so you can pass in what packages you want to document,
-    // not have it specific to app/
-    let appJS = new Funnel('app', {
-      include: ['**/components/*.js']
+    let componentJS = new Funnel('.', {
+      include: componentFilePathPatterns,
     });
-    let docsTree = new DocsGenerator([appJS], {
+    let componentDocsTree = new YUIDocsGenerator([componentJS], {
       project: this.project,
-      destDir: 'docs',
-      packages: yuiDocOptions.packages || [ this.project.name() ]
-
+      destDir: 'storybook-docgen',
+      packages: [ this.project.name() ]
     });
 
     return mergeTrees([
       appTree,
-      docsTree,
+      componentDocsTree,
     ]);
   },
 
