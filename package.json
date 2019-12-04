@@ -60,10 +60,10 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "defaultBlueprint": "ember-cli-storybook"
+    "configPath": "tests/dummy/config"
   },
   "dependencies": {
+    "broccoli-funnel": "^2.0.2",
     "cheerio": "^1.0.0-rc.2",
     "ember-cli-addon-docs-yuidoc": "^0.2.3",
     "ember-cli-babel": "^7.1.2"
