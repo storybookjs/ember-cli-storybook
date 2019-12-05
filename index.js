@@ -31,12 +31,7 @@ module.exports = {
     let options = this._getOptions();
     let componentFilePathPatterns = options.componentFilePathPatterns || ['app/components/*.js', 'lib/**/addon/components/*.js'];
 
-    if (type !== 'all') {
-      return appTree;
-    }
-
-    if (type === 'all' && options.autoDocEnabled === false) {
-      this.ui.write('ember-cli-storybook is not generating json documentation: autoDocEnabled was false.');
+    if (type !== 'all' || !options.enableAddonDocsIntegration) {
       return appTree;
     }
 
