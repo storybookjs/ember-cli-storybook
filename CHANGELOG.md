@@ -1,3 +1,7 @@
+# 0.2.0 (12/06/2019)
+
+- [Auto doc generation from YUI doc comments](https://github.com/storybookjs/ember-cli-storybook/pull/24)
+
 # 0.1.1 (02/05/2019)
 
 - [Fix rootUrl path replace](https://github.com/storybookjs/ember-cli-storybook/pull/13)
