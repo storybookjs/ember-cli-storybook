@@ -2,11 +2,53 @@
 
 const fs = require('fs');
 const path = require('path');
-
+const YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
+const Funnel = require('broccoli-funnel');
+const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead } = require('./util');
 
 module.exports = {
   name: 'ember-cli-storybook',
+
+  _getOptions() {
+    let addonOptions = (this.parent && this.parent.options) || (this.app && this.app.options) || {};
+    return addonOptions[this.name] || {};
+  },
+
+  included(app) {
+    this._super.included.apply(this, arguments);
+
+    // see: https://github.com/ember-cli/ember-cli/issues/3718
+    if (typeof app.import !== 'function' && app.app) {
+      app = app.app;
+    }
+
+    this.app = app;
+ },
+
+  postprocessTree(type, appTree) {
+    this._super.postprocessTree.apply(this, arguments);
+    let options = this._getOptions();
+    let componentFilePathPatterns = options.componentFilePathPatterns || ['app/components/*.js', 'lib/**/addon/components/*.js'];
+
+    if (type !== 'all' || !options.enableAddonDocsIntegration) {
+      return appTree;
+    }
+
+    let componentJS = new Funnel('.', {
+      include: componentFilePathPatterns,
+    });
+    let componentDocsTree = new YUIDocsGenerator([componentJS], {
+      project: this.project,
+      destDir: 'storybook-docgen',
+      packages: [ this.project.name() ]
+    });
+
+    return mergeTrees([
+      appTree,
+      componentDocsTree,
+    ]);
+  },
 
   outputReady: function(result) {
     if (!this.app) {
