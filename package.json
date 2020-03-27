@@ -68,5 +68,8 @@
     "cheerio": "^1.0.0-rc.2",
     "ember-cli-addon-docs-yuidoc": "^0.2.3",
     "ember-cli-babel": "^7.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
