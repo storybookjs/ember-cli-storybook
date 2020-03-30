@@ -7,7 +7,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-cli-storybook
+ember install @storybook/ember-cli-storybook
 ```
 
 Usage
