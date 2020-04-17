@@ -52,19 +52,26 @@ function getDocumentValues($, selector, attributes=[], ignoreRegexs=[]) {
   return config;
 }
 
+function escape(string) {
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
 function removeRootURL(config) {
   // extract and parse the application config
   let appConfig = JSON.parse(decodeURIComponent(config.meta[0].content));
   let { rootURL } = appConfig;
-	if (!rootURL) return config;
-	config.script = config.script.map(s => {
-		s.src = s.src.replace(rootURL, './');
-		return s;
-	});
-	config.link = config.link.map(l => {
-		l.href = l.href.replace(rootURL, './');
-		return l;
-	});
+  if (!rootURL) return config;
+
+  let pattern = new RegExp(`^${escape(rootURL)}`);
+
+  config.script = config.script.map(s => {
+    s.src = s.src.replace(pattern, './');
+    return s;
+  });
+  config.link = config.link.map(l => {
+    l.href = l.href.replace(pattern, './');
+    return l;
+  });
   return config;
 }
 
@@ -127,7 +134,7 @@ function generatePreviewHead(parsedConfig) {
         }
         doc.push(`<${key} ${objectToHTMLAttributes(value)}></${key}>`);
         if(value.src.indexOf('assets/vendor.js') > -1) {
-          // make sure we push this right after vendor to ensure the application does not bind to the window. 
+          // make sure we push this right after vendor to ensure the application does not bind to the window.
           doc.push('<script>runningTests = true; Ember.testing=true;</script>');
         }
       } else {
