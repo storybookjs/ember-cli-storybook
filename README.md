@@ -88,6 +88,41 @@ export let SortableColumns = () => {
 };
 ```
 
+### Working with store
+As said above, Storybook integration for Ember renders stories into a custom component, that are store-less. 
+If your component relies on an Ember model, for example, you can work around with the same way you would do for query params.  
+
+```javascript
+function createUser() {
+  return on('init', function () {
+    this.user = getOwner(this)
+      .lookup('service:store')
+      .createRecord('user', { lastName: 'Doe', email: 'john.doe@qonto.eu' });
+  });
+}
+```
+
+And then in your story:
+```javascript
+export const storeExample = () => {
+  return {
+    template: hbs`
+      <SomeComponent
+        @model={{this.user}}
+        />
+    `,
+    context: {
+      createUser: createUser(),
+    },
+  };
+};
+```
+
+### Making Ember import work
+Because Ember uses a mapping to resolve import like `@ember/array` or `@ember/object` for example, they may not work in Storybook.
+However, and because the module is already declared in the [babel preset for ember](https://github.com/storybookjs/storybook/blob/next/app/ember/src/server/framework-preset-babel-ember.ts#L19), you should be able to make them work by adding 
+[babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill) to our `package.json`.
+
 ### `preview-head` generation race condition
 
 The `.storybook/preview-head.html` file is auto-generated and changes based on your `config/environment.js` and whether it’s a static or live-updating build of Storybook. This means that you’ll often see version control diffs for it, which can be bothersome.
