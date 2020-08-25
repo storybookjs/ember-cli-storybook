@@ -29,7 +29,12 @@ module.exports = {
   postprocessTree(type, appTree) {
     this._super.postprocessTree.apply(this, arguments);
     let options = this._getOptions();
-    let componentFilePathPatterns = options.componentFilePathPatterns || ['app/components/*.js', 'lib/**/addon/components/*.js'];
+
+    let componentFilePathPatterns = options.componentFilePathPatterns || [
+      'app/components/*.js',
+      'lib/**/addon/components/*.js',
+      'addon/components/*.js',
+    ];
 
     if (type !== 'all' || !options.enableAddonDocsIntegration) {
       return appTree;
