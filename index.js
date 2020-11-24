@@ -8,7 +8,7 @@ const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead } = require('./util');
 
 module.exports = {
-  name: 'ember-cli-storybook',
+  name: require('./package').name,
 
   _getOptions() {
     let addonOptions = (this.parent && this.parent.options) || (this.app && this.app.options) || {};
@@ -70,6 +70,7 @@ module.exports = {
     const distFilePath = path.resolve(result.directory, 'index.html');
     const testFilePath = path.resolve(result.directory, 'tests/index.html');
     const previewHeadFilePath = path.resolve(process.cwd(), '.storybook/preview-head.html');
+    const previewHeadDirectory = path.dirname(previewHeadFilePath);
     const envFilePath = path.resolve(process.cwd(), '.env');
 
     let fileContents = '';
@@ -94,7 +95,8 @@ module.exports = {
 
     this.ui.writeLine('Generating files needed by Storybook');
 
-    fs.writeFileSync(previewHeadFilePath, previewHead)
+    fs.mkdirSync(previewHeadDirectory, { recursive: true });
+    fs.writeFileSync(previewHeadFilePath, previewHead);
 
     this.ui.writeLine('Generating .env');
 
