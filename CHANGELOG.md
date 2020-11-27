@@ -1,6 +1,11 @@
+# 0.3.0 (11/27/2020)
+
+- [Add renderStory test helper](https://github.com/storybookjs/ember-cli-storybook/pull/51)
+- [Bump ember-cli-update to 3.20.2](https://github.com/storybookjs/ember-cli-storybook/pull/50)
+
 # 0.2.1 (03/28/2020)
 
-- [Add defaultBlueprint declaration to package.json]((https://github.com/storybookjs/ember-cli-storybook/pull/27)
+- [Add defaultBlueprint declaration to package.json](https://github.com/storybookjs/ember-cli-storybook/pull/27)
 
 # 0.2.0 (12/06/2019)
 
