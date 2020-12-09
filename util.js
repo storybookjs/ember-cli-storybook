@@ -53,7 +53,7 @@ function getDocumentValues($, selector, attributes=[], ignoreRegexs=[]) {
 }
 
 function escape(string) {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 function removeRootURL(config) {
