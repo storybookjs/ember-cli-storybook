@@ -15,35 +15,35 @@ function storyFn(args) {
       count: '2',
       name: 'pickles',
       emoji: '🥒',
-      ...args
-    }
-  }
+      ...args,
+    },
+  };
 }
 
-const storyFnWithArgs = storyFn.bind({})
+const storyFnWithArgs = storyFn.bind({});
 storyFnWithArgs.args = {
-  count: '10'
-}
+  count: '10',
+};
 
-module('Integration | Test Support', function(hooks) {
+module('Integration | Test Support', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('render story function', async function(assert) {
+  test('render story function', async function (assert) {
     await renderStory(storyFn);
 
     assert.dom().includesText('2 pickles 🥒');
   });
 
-  test('render story function with args', async function(assert) {
+  test('render story function with args', async function (assert) {
     await renderStory(storyFnWithArgs);
 
     assert.dom().includesText('10 pickles 🥒');
   });
 
-  test('passing additional args', async function(assert) {
+  test('passing additional args', async function (assert) {
     await renderStory(storyFn, {
       name: 'apples',
-      emoji: '🍎'
+      emoji: '🍎',
     });
 
     assert.dom().includesText('2 apples 🍎');

@@ -1,11 +1,11 @@
 module.export = {
-    normalizeEntityName() {},
+  normalizeEntityName() {},
 
-    afterInstall() {
-        return this.addPackagesToProject([
-            {name: '@storybook/ember'},
-            {name: '@babel/core'},
-            {name: 'babel-loader@next'}
-        ]);
-    }
-}
+  afterInstall() {
+    return this.addPackagesToProject([
+      { name: '@storybook/ember' },
+      { name: '@babel/core' },
+      { name: 'babel-loader@next' },
+    ]);
+  },
+};
