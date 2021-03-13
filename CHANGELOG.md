@@ -1,3 +1,7 @@
+# 0.3.1 (11/27/2020)
+
+- [Restore config key](https://github.com/storybookjs/ember-cli-storybook/pull/54)
+
 # 0.3.0 (11/27/2020)
 
 - [Add renderStory test helper](https://github.com/storybookjs/ember-cli-storybook/pull/51)
