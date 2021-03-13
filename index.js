@@ -10,9 +10,11 @@ const { parse, generatePreviewHead } = require('./util');
 module.exports = {
   name: require('./package').name,
 
+  configKey: 'ember-cli-storybook',
+
   _getOptions() {
     let addonOptions = (this.parent && this.parent.options) || (this.app && this.app.options) || {};
-    return addonOptions[this.name] || {};
+    return addonOptions[this.configKey] || {};
   },
 
   included(app) {
