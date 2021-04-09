@@ -1,3 +1,8 @@
+# 0.4.0 (04/09/2021)
+
+- [fixes defaultBlueprint path to point to scoped package path](https://github.com/storybookjs/ember-cli-storybook/pull/57)
+- [Makes sure that only URLs that begin with the rootURL get converted to relative paths](https://github.com/storybookjs/ember-cli-storybook/pull/36)
+
 # 0.3.1 (11/27/2020)
 
 - [Restore config key](https://github.com/storybookjs/ember-cli-storybook/pull/54)
