@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ember-cli-storybook",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "📒 Ember storybook adapter",
   "keywords": [
     "ember-addon",
@@ -75,7 +75,7 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "defaultBlueprint": "ember-cli-storybook"
+    "defaultBlueprint": "@storybook/ember-cli-storybook"
   },
   "dependencies": {
     "broccoli-funnel": "^2.0.2",

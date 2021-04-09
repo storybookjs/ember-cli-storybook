@@ -63,17 +63,23 @@ function getDocumentValues($, selector, attributes = [], ignoreRegexs = []) {
   return config;
 }
 
+function escape(string) {
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
 function removeRootURL(config) {
   // extract and parse the application config
   let appConfig = JSON.parse(decodeURIComponent(config.meta[0].content));
   let { rootURL } = appConfig;
   if (!rootURL) return config;
-  config.script = config.script.map((s) => {
-    s.src = s.src.replace(rootURL, './');
+  let pattern = new RegExp(`^${escape(rootURL)}`);
+
+  config.script = config.script.map(s => {
+    s.src = s.src.replace(pattern, './');
     return s;
   });
-  config.link = config.link.map((l) => {
-    l.href = l.href.replace(rootURL, './');
+  config.link = config.link.map(l => {
+    l.href = l.href.replace(pattern, './');
     return l;
   });
   return config;

@@ -51,6 +51,14 @@ test('@parse', (t) => {
           rel: 'stylesheet',
           href: './assets/test-support.css',
         },
+        {
+          rel: 'icon',
+          href: './favicon.png'
+        },
+        {
+          rel: 'stylesheet',
+          href: 'http://example.com/external/style.css'
+        }
       ],
       script: [
         {
@@ -68,7 +76,9 @@ test('@parse', (t) => {
         {
           src: './assets/tests.js',
         },
-      ],
+          src: 'http://example.com/external/script.js'
+        },
+      ]
     });
   });
 
