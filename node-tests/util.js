@@ -82,6 +82,10 @@ test('@parse', (t) => {
         {
           rel: 'icon',
           href: './favicon.png'
+        },
+        {
+          rel: 'stylesheet',
+          href: 'http://example.com/external/style.css'
         }
       ],
       script: [
@@ -93,6 +97,9 @@ test('@parse', (t) => {
         },
         {
           src: './assets/vault.js'
+        },
+        {
+          src: 'http://example.com/external/script.js'
         },
       ]
     });

@@ -61,7 +61,7 @@ module.exports = {
     if (!this.app) {
       // You will need ember-cli >= 1.13 to use ember-cli-deploy's postBuild integration.
       // This is because prior to 1.13, `this.app` is not available in the outputReady hook.
-      this.ui.writeLine('please upgrade to ember-cli >= 1.13')
+      this.ui.writeErrorLine('please upgrade to ember-cli >= 1.13')
       return;
     }
 
@@ -77,30 +77,30 @@ module.exports = {
 
     let fileContents = '';
 
-    this.ui.writeLine('Generating files needed by Storybook');
+    this.ui.writeDebugLine('Generating files needed by Storybook');
 
     if(fs.existsSync(testFilePath)) {
       fileContents = fs.readFileSync(testFilePath);
 
-      this.ui.writeLine(`Parsing ${testFilePath}`);
+      this.ui.writeDebugLine(`Parsing ${testFilePath}`);
     } else {
       fileContents = fs.readFileSync(distFilePath);
 
-      this.ui.writeLine(`Parsing ${distFilePath}`);
+      this.ui.writeDebugLine(`Parsing ${distFilePath}`);
     }
 
     const parsedConfig = parse(fileContents, ignoreTestFiles);
 
-    this.ui.writeLine('Generating preview-head.html');
+    this.ui.writeDebugLine('Generating preview-head.html');
 
     const previewHead = generatePreviewHead(parsedConfig);
 
-    this.ui.writeLine('Generating files needed by Storybook');
+    this.ui.writeDebugLine('Generating files needed by Storybook');
 
     fs.mkdirSync(previewHeadDirectory, { recursive: true });
     fs.writeFileSync(previewHeadFilePath, previewHead);
 
-    this.ui.writeLine('Generating .env');
+    this.ui.writeDebugLine('Generating .env');
 
     if(fs.existsSync(path.resolve(process.cwd(), '.env'))) {
       let fileContent = fs.readFileSync(envFilePath, 'utf8');
