@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "broccoli-funnel": "^2.0.2",
-    "broccoli-merge-trees": "^3.0.2",
+    "broccoli-merge-trees": "^4.2.0",
     "cheerio": "^1.0.0-rc.2",
     "ember-cli-addon-docs-yuidoc": "^1.0.0",
     "ember-cli-babel": "^7.23.0",
