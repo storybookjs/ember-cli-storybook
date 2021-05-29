@@ -8,14 +8,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrielcsapo/ember-cli-storybook.git"
+    "url": "git+https://github.com/storybookjs/ember-cli-storybook.git"
   },
   "license": "MIT",
   "author": "Gabriel J. Csapo <gabecsapo@gmail.com>",
   "bugs": {
-    "url": "https://github.com/gabrielcsapo/ember-cli-storybook/issues"
+    "url": "https://github.com/storybookjs/ember-cli-storybook"
   },
-  "homepage": "https://github.com/gabrielcsapo/ember-cli-storybook#readme",
+  "homepage": "https://github.com/storybookjs/ember-cli-storybook#readme",
   "directories": {
     "lib": "lib",
     "test": "tests"
