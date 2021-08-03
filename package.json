@@ -8,14 +8,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrielcsapo/ember-cli-storybook.git"
+    "url": "git+https://github.com/storybookjs/ember-cli-storybook.git"
   },
   "license": "MIT",
   "author": "Gabriel J. Csapo <gabecsapo@gmail.com>",
   "bugs": {
-    "url": "https://github.com/gabrielcsapo/ember-cli-storybook/issues"
+    "url": "https://github.com/storybookjs/ember-cli-storybook"
   },
-  "homepage": "https://github.com/gabrielcsapo/ember-cli-storybook#readme",
+  "homepage": "https://github.com/storybookjs/ember-cli-storybook#readme",
   "directories": {
     "lib": "lib",
     "test": "tests"
@@ -35,7 +35,7 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-auto-import": "^1.6.0",
-    "ember-cli": "~3.20.2",
+    "ember-cli": "~3.26.1",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-sri": "^2.1.1",
@@ -46,9 +46,9 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^8.0.0",
-    "ember-source": "~3.20.2",
+    "ember-source": "~3.27.5",
     "ember-source-channel-url": "^2.0.1",
-    "ember-template-lint": "^2.9.1",
+    "ember-template-lint": "^3.4.2",
     "ember-try": "^1.4.0",
     "eslint": "^7.5.0",
     "eslint-plugin-ember": "^8.9.1",
@@ -69,7 +69,7 @@
     "defaultBlueprint": "@storybook/ember-cli-storybook"
   },
   "dependencies": {
-    "broccoli-funnel": "^2.0.2",
+    "broccoli-funnel": "^3.0.8",
     "broccoli-merge-trees": "^4.2.0",
     "cheerio": "^1.0.0-rc.2",
     "ember-cli-addon-docs-yuidoc": "^1.0.0",
