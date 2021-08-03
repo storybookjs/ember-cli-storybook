@@ -5,7 +5,7 @@ const path = require('path');
 const YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
 const Funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
-const { parse, generatePreviewHead } = require('./util');
+const { parse, generatePreviewHead } = require('./lib/util');
 
 module.exports = {
   name: require('./package').name,
@@ -67,7 +67,7 @@ module.exports = {
 
     const { name } = this.app;
     const { storybook={} } = this.app.project.pkg;
-    const { ignoreTestFiles=true } = storybook;
+    const { ignoreTestFiles=true, config={ 'link': [] } } = storybook;
 
     const distFilePath = path.resolve(result.directory, 'index.html');
     const testFilePath = path.resolve(result.directory, 'tests/index.html');
@@ -92,6 +92,18 @@ module.exports = {
     const parsedConfig = parse(fileContents, ignoreTestFiles);
 
     this.ui.writeDebugLine('Generating preview-head.html');
+
+    if(config) {
+      this.ui.writeDebugLine('Setting up overrides.');
+
+      for(const key in config) {
+        if(!parsedConfig[key]) {
+          parsedConfig[key] = []
+        }
+
+        parsedConfig[key] = parsedConfig[key].concat(config[key])
+      }
+    }
 
     const previewHead = generatePreviewHead(parsedConfig);
 

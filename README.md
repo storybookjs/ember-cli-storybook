@@ -1,40 +1,71 @@
-ember-cli-storybook
-==============================================================================
+# ember-cli-storybook
 
-📒 Ember storybook adapter
+> 📒 Ember storybook adapter
 
 
-Compatibility
-------------------------------------------------------------------------------
+# Compatibility
 
 * Ember.js v3.16 or above
 * Ember CLI v2.13 or above
 * Node.js v10 or above
 
+# Installation
 
-Installation
-------------------------------------------------------------------------------
-
-```
+```terminal
 ember install @storybook/ember-cli-storybook
 ```
 
-Usage
-------------------------------------------------------------------------------
+# Usage
 
 This will be triggered automatically as a post build action when running `ember build`
-
 
 > package.json options (defaults)
 
 ```json
 "storybook": {
-  "ignoreTestFiles": true
+  "ignoreTestFiles": true,
+  "config": {}
 }
 ```
 
-Troubleshooting
-------------------------------------------------------------------------------
+## Config
+
+The config object represents anything that could be parsed from an `index.html` file. This must be in the format as below: 
+
+```json
+{
+  "meta": [{
+    "attributes": ["name", "content"]
+  }, {
+    "attributes": ["name", "content"]
+  }, {
+    "attributes": ["name", "content", "id"]
+  }],
+  "link": [{
+    "selector": "link",
+    "attributes": ["rel", "href"]
+  }],
+  "script": [{
+    "selector": "script",
+    "attributes": ["src"]
+  }]
+}
+```
+
+So in order to add a script tag to the generated `preview-head.html` a potential config would look like:
+
+```json
+"storybook": {
+  "config": { 
+    "script": {
+      "src": "./assets/foo.js"
+    }
+  }
+}
+```
+
+> It is important to note that storybook will by default serve any files out of the `public` folder. If you have custom files you would like to serve they need to exist there. 
+# Troubleshooting
 
 ### Components that need routing for query parameters
 
@@ -98,6 +129,7 @@ export let SortableColumns = () => {
 ```
 
 ### Working with store
+
 As said above, Storybook integration for Ember renders stories into a custom component, that are store-less. 
 If your component relies on an Ember model, for example, you can work around with the same way you would do for query params.  
 
@@ -128,6 +160,7 @@ export const storeExample = () => {
 ```
 
 ### Making Ember import work
+
 Because Ember uses a mapping to resolve import like `@ember/array` or `@ember/object` for example, they may not work in Storybook.
 However, and because the module is already declared in the [babel preset for ember](https://github.com/storybookjs/storybook/blob/next/app/ember/src/server/framework-preset-babel-ember.ts#L19), you should be able to make them work by adding 
 [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill) to our `package.json`.
