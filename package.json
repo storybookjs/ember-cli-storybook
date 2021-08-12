@@ -26,7 +26,7 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "npm-run-all lint:* test:*",
-    "test:node": "tape node-tests/**.js",
+    "test:node": "jest node-tests/*.test.js",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
   },
@@ -52,11 +52,12 @@
     "ember-try": "^1.4.0",
     "eslint": "^7.5.0",
     "eslint-plugin-ember": "^8.9.1",
+    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-node": "^11.1.0",
+    "jest": "^27.0.6",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
-    "qunit-dom": "^1.2.0",
-    "tape": "^4.9.1"
+    "qunit-dom": "^1.2.0"
   },
   "engines": {
     "node": "10.* || >= 12"
