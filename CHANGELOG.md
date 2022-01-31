@@ -1,3 +1,8 @@
+# 0.5.0 (04/09/2021)
+
+- [feature - enable config overrides](https://github.com/storybookjs/ember-cli-storybook/pull/80)
+- [fix: do nothing if no meta found in removeRootURL() ](https://github.com/storybookjs/ember-cli-storybook/pull/98)
+- [Maintain type attribute on script tags](https://github.com/storybookjs/ember-cli-storybook/pull/96)
 # 0.4.0 (04/09/2021)
 
 - [fixes defaultBlueprint path to point to scoped package path](https://github.com/storybookjs/ember-cli-storybook/pull/57)
