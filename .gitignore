@@ -6,6 +6,7 @@
 
 # dependencies
 /node_modules/
+.DS_Store
 
 # storybook
 /storybook-static/
