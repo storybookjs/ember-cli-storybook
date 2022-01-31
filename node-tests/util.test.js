@@ -62,6 +62,10 @@ Object {
     Object {
       "src": "./assets/tests.js",
     },
+    Object {
+      "src": "./assets/component.js",
+      "type": "module",
+    },
   ],
 }
 `);
@@ -101,9 +105,6 @@ Object {
   ],
   "script": Array [
     Object {
-      "src": "./ember-cli-live-reload.js",
-    },
-    Object {
       "src": "./assets/vendor.js",
     },
     Object {
@@ -111,6 +112,10 @@ Object {
     },
     Object {
       "src": "http://example.com/external/script.js",
+    },
+    Object {
+      "src": "./ember-cli-live-reload.js",
+      "type": "text/javascript",
     },
   ],
 }
@@ -149,6 +154,10 @@ Object {
     },
     Object {
       "src": "./assets/storybook-ember-3-1.js",
+    },
+    Object {
+      "src": "./assets/component.js",
+      "type": "module",
     },
   ],
 }
