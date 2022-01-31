@@ -1,3 +1,6 @@
+# 0.5.0 (04/09/2021)
+
+- [feature - enable config overrides](https://github.com/storybookjs/ember-cli-storybook/pull/80)
 # 0.4.0 (04/09/2021)
 
 - [fixes defaultBlueprint path to point to scoped package path](https://github.com/storybookjs/ember-cli-storybook/pull/57)
