@@ -7,11 +7,11 @@
 
 * Ember.js v3.16 or above
 * Ember CLI v2.13 or above
-* Node.js v10 or above
+* Node.js v16 or above
 
 # Installation
 
-```terminal
+```shell
 ember install @storybook/ember-cli-storybook
 ```
 
@@ -25,6 +25,15 @@ This will be triggered automatically as a post build action when running `ember 
 "storybook": {
   "ignoreTestFiles": true,
   "config": {}
+}
+```
+
+> ember-cli-build options (defaults)
+
+```json
+"ember-cli-storybook": {
+  "componentFilePathPatterns": [],
+  "enableAddonDocsIntegration": true, // enables yuidoc generation
 }
 ```
 
