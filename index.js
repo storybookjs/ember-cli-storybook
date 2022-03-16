@@ -45,6 +45,7 @@ module.exports = {
     let componentJS = new Funnel('.', {
       include: componentFilePathPatterns,
     });
+
     let componentDocsTree = new YUIDocsGenerator([componentJS], {
       project: this.project,
       destDir: 'storybook-docgen',
