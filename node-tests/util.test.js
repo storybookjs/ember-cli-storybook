@@ -3,6 +3,9 @@ const path = require('path');
 const {
   generatePreviewHead,
   objectToHTMLAttributes,
+  findEnvironment,
+  overrideEnvironment,
+  extendEnvironment,
   parse
 } = require('../lib/util');
 
@@ -163,32 +166,122 @@ Object {
 }
 `);
     });
-  
+
     it('should be able to parse metas from a built html file from an app that uses engines', () => {
       expect.assertions(1);
-  
+
       const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'engines.html'), 'utf8');
       const metas = parse(fileContent, true).meta;
-  
+
       expect(metas).toMatchSnapshot();
     });
   });
-  
+
   describe('@generatePreviewHead', () => {
     it('should work with file created with `ember build`', () => {
       expect.assertions(1);
-  
+
       const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'build.html'), 'utf8');
-  
+
       expect(generatePreviewHead(parse(fileContent))).toMatchSnapshot()
     })
-  
+
     it('should work with file created with `ember serve` (should append livereload pointing at serve instance)', () => {
       expect.assertions(1);
-  
+
       const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'serve.html'), 'utf8');
-  
+
       expect(generatePreviewHead(parse(fileContent))).toMatchSnapshot();
+    });
+  });
+
+  describe('@findEnvironment', () => {
+    it('should return the meta node with name config/environment (which has the app env encoded as its content)', () => {
+      expect.assertions(1);
+
+      const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'serve.html'), 'utf8');
+      const config = parse(fileContent, true);
+      const env = findEnvironment(config);
+
+      expect(env.name).toBe('storybook-ember-3-1/config/environment');
+    });
+
+    it('should be robust against a file with no environment node', () => {
+      expect.assertions(1);
+
+      const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'no-env.html'), 'utf8');
+      const config = parse(fileContent, true);
+      const env = findEnvironment(config);
+
+      expect(env).toBeUndefined();
+    });
+  });
+
+  describe('@extendEnvironment', () => {
+    it('deeply merges the original env object with override objects', () => {
+      const env = {
+        one: 'fish',
+        two: {
+          fishes: [ 'red', 'blue' ]
+        }
+      };
+
+      expect(
+        extendEnvironment(
+          env,
+          { two: { fishes: [ 'yellow', 'purple' ], updated: true } },
+          { hello: 'world' }
+        )
+      ).toEqual({
+        one: 'fish',
+        two: {
+          fishes: [ 'yellow', 'purple' ],
+          updated: true,
+        },
+        hello: 'world',
+      });
+    });
+
+    it('should be robust against undefined input', () => {
+      const env = {
+        one: 'fish',
+        two: {
+          fishes: [ 'red', 'blue' ]
+        }
+      };
+
+      expect(extendEnvironment(env, undefined, undefined)).toEqual({
+        one: 'fish',
+        two: {
+          fishes: [ 'red', 'blue' ]
+        }
+      });
+    });
+  });
+
+  describe('@overrideEnvironment', () => {
+    // Take a parsed fixture, get env node, override, assert strings as well as intermediates
+    // Assert works fine with undefined argument
+    it('returns a properly encoded meta value for an environment with overrides', () => {
+      expect.assertions(1);
+
+      const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'serve.html'), 'utf8');
+      const config = parse(fileContent, true);
+      const env = findEnvironment(config);
+      const overridden = overrideEnvironment(env, {
+        rootURL: '/foobar/',
+        meta: 'data',
+        APP: {
+          name: 'new-name-from-test',
+        },
+      });
+
+      const envObject = JSON.parse(decodeURIComponent(env.content));
+      envObject.rootURL = '/foobar/';
+      envObject.meta = 'data';
+      envObject.APP.name = 'new-name-from-test';
+
+      expect(overridden).toBe(encodeURIComponent(JSON.stringify(envObject)));
     });
   });
 });
