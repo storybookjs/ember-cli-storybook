@@ -5,7 +5,7 @@ const path = require('path');
 const YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
 const Funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
-const { parse, generatePreviewHead, overrideEnvironment } = require('./lib/util');
+const { parse, generatePreviewHead, overrideEnvironment, findEnvironment } = require('./lib/util');
 
 module.exports = {
   name: require('./package').name,
@@ -95,12 +95,9 @@ module.exports = {
 
     this.ui.writeDebugLine('Generating preview-head.html');
 
-    const environment = parsedConfig.meta.find(meta => meta.name.endsWith('config/environment'));
+    const environment = findEnvironment(parsedConfig);
 
     if (environment) {
-      // From the Ember App's environment.js file
-      const original = JSON.parse(decodeURIComponent(environment.content));
-
       // When rootURL is anything other than "/" routing can't be started without erroring, so
       // this is a sensible default.
       const defaultOverride = { rootURL: '/' };
@@ -108,7 +105,8 @@ module.exports = {
       // Allow arbitrary overriding in the storybook environment
       const environmentOverride = fs.existsSync(environmentOverridePath) && require(environmentOverridePath)(process.env);
 
-      environment.content = encodeURIComponent(JSON.stringify(overrideEnvironment(original, defaultOverride, environmentOverride)));
+      // Apply overrides to the environment meta node
+      environment.content = overrideEnvironment(environment, defaultOverride, environmentOverride);
     }
 
     if(config) {
