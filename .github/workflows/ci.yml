@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 16.x ]
-        ember: [lts-3.20, lts-3.16, release, beta, canary, default-with-jquery, classic]
+        ember: [lts-3.28, lts-3.24, 4.1, release, beta, canary, default-with-jquery, classic]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
