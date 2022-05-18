@@ -8,7 +8,7 @@ exports[`util @generatePreviewHead should work with file created with \`ember bu
 <link rel=\\"stylesheet\\" href=\\"./assets/test-support.css\\" />
 <script src=\\"./testem.js\\"></script>
 <script src=\\"./assets/vendor.js\\"></script>
-<script>runningTests = true; Ember.testing=true;</script>
+<script>window.Ember = require(\\"ember\\").default; runningTests = true; Ember.testing=true;</script>
 <script src=\\"./assets/test-support.js\\"></script>
 <script src=\\"./assets/storybook-ember-3-1.js\\"></script>
 <script src=\\"./assets/tests.js\\"></script>
@@ -23,7 +23,7 @@ exports[`util @generatePreviewHead should work with file created with \`ember se
 <link rel=\\"stylesheet\\" href=\\"./assets/test-support.css\\" />
 <script src=\\"./testem.js\\"></script>
 <script src=\\"./assets/vendor.js\\"></script>
-<script>runningTests = true; Ember.testing=true;</script>
+<script>window.Ember = require(\\"ember\\").default; runningTests = true; Ember.testing=true;</script>
 <script src=\\"./assets/test-support.js\\"></script>
 <script src=\\"./assets/storybook-ember-3-1.js\\"></script>
 <script src=\\"./assets/tests.js\\"></script>
