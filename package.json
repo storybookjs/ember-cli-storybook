@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ember-cli-storybook",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "📒 Ember storybook adapter",
   "keywords": [
     "ember-addon",
@@ -49,7 +49,7 @@
     "ember-resolver": "^8.0.0",
     "ember-source": "~3.28.8",
     "ember-source-channel-url": "^2.0.1",
-    "ember-template-lint": "^3.4.2",
+    "ember-template-lint": "^4.10.0",
     "ember-try": "^1.4.0",
     "eslint": "^7.5.0",
     "eslint-plugin-ember": "^8.9.1",
