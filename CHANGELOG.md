@@ -1,10 +1,17 @@
 # Unreleased
 
-# 0.5.0 (04/09/2021)
+# 0.6.0 (05/23/2022)
+
+- [Updates Ember scenario to have latest LTS version and test against Ember4](https://github.com/storybookjs/ember-cli-storybook/pull/113)
+- [Support Storybook on Ember 4.1+](https://github.com/storybookjs/ember-cli-storybook/pull/116)
+- [Handle src-less script tags without error](https://github.com/storybookjs/ember-cli-storybook/pull/104)
+
+# 0.5.0 (04/09/2022)
 
 - [feature - enable config overrides](https://github.com/storybookjs/ember-cli-storybook/pull/80)
 - [fix: do nothing if no meta found in removeRootURL() ](https://github.com/storybookjs/ember-cli-storybook/pull/98)
 - [Maintain type attribute on script tags](https://github.com/storybookjs/ember-cli-storybook/pull/96)
+
 # 0.4.0 (04/09/2021)
 
 - [fixes defaultBlueprint path to point to scoped package path](https://github.com/storybookjs/ember-cli-storybook/pull/57)
