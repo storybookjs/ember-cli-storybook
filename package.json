@@ -70,7 +70,7 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "defaultBlueprint": "@storybook/ember-cli-storybook"
+    "defaultBlueprint": "ember-cli-storybook"
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.8",
