@@ -37,9 +37,18 @@ This will be triggered automatically as a post build action when running `ember 
 }
 ```
 
+It's recommended to add the following commands in `package.json` to build, test and deploy Storybook with Ember:
+
+```json
+"storybook": "start-storybook -p 6006 -s dist --ci",
+"storybook-dev": "npm-run-all --continue-on-error --parallel start storybook",
+"prebuild-storybook": "ember build",
+"build-storybook": "build-storybook -s dist"
+```
+
 ## Config
 
-The config object represents anything that could be parsed from an `index.html` file. This must be in the format as below: 
+The config object represents anything that could be parsed from an `index.html` file. This must be in the format as below:
 
 ```json
 {
@@ -65,7 +74,7 @@ So in order to add a script tag to the generated `preview-head.html` a potential
 
 ```json
 "storybook": {
-  "config": { 
+  "config": {
     "script": {
       "src": "./assets/foo.js"
     }
@@ -73,7 +82,7 @@ So in order to add a script tag to the generated `preview-head.html` a potential
 }
 ```
 
-> It is important to note that storybook will by default serve any files out of the `public` folder. If you have custom files you would like to serve they need to exist there. 
+> It is important to note that storybook will by default serve any files out of the `public` folder. If you have custom files you would like to serve they need to exist there.
 # Troubleshooting
 
 ### Components that need routing for query parameters
@@ -139,8 +148,8 @@ export let SortableColumns = () => {
 
 ### Working with store
 
-As said above, Storybook integration for Ember renders stories into a custom component, that are store-less. 
-If your component relies on an Ember model, for example, you can work around with the same way you would do for query params.  
+As said above, Storybook integration for Ember renders stories into a custom component, that are store-less.
+If your component relies on an Ember model, for example, you can work around with the same way you would do for query params.
 
 ```javascript
 function createUser() {
@@ -171,7 +180,7 @@ export const storeExample = () => {
 ### Making Ember import work
 
 Because Ember uses a mapping to resolve import like `@ember/array` or `@ember/object` for example, they may not work in Storybook.
-However, and because the module is already declared in the [babel preset for ember](https://github.com/storybookjs/storybook/blob/next/app/ember/src/server/framework-preset-babel-ember.ts#L19), you should be able to make them work by adding 
+However, and because the module is already declared in the [babel preset for ember](https://github.com/storybookjs/storybook/blob/next/app/ember/src/server/framework-preset-babel-ember.ts#L19), you should be able to make them work by adding
 [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill) to our `package.json`.
 
 ### `preview-head` generation race condition
