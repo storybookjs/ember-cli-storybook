@@ -2,10 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
 const Funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead, overrideEnvironment, findEnvironment } = require('./lib/util');
+
+let YUIDocsGenerator;
 
 module.exports = {
   name: require('./package').name,
@@ -45,6 +46,10 @@ module.exports = {
     let componentJS = new Funnel('.', {
       include: componentFilePathPatterns,
     });
+
+    if (!YUIDocsGenerator) {
+      YUIDocsGenerator = require('ember-cli-addon-docs-yuidoc/lib/broccoli/generator');
+    }
 
     let componentDocsTree = new YUIDocsGenerator([componentJS], {
       project: this.project,
