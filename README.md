@@ -81,8 +81,19 @@ So in order to add a script tag to the generated `preview-head.html` a potential
   }
 }
 ```
-
 > It is important to note that storybook will by default serve any files out of the `public` folder. If you have custom files you would like to serve they need to exist there.
+
+## Embroider & YUIDoc
+If you want to use YUIDoc with Embroider, you will need to modify your `ember-cli-build.js` to be able to compile the documentation.
+
+```diff
+const { Webpack } = require('@embroider/webpack');
+- return require('@embroider/compat').compatBuild(app, Webpack);
++ const compiledApp = require('@embroider/compat').compatBuild(app, Webpack);
++
++ return require('@storybook/ember-cli-storybook').prerender(app, compiledApp);
+```
+
 # Troubleshooting
 
 ### Components that need routing for query parameters
