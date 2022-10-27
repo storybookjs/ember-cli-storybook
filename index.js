@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const Funnel = require('broccoli-funnel');
-const mergeTrees = require('broccoli-merge-trees');
 const { parse, generatePreviewHead, overrideEnvironment, findEnvironment } = require('./lib/util');
 
 let YUIDocsGenerator;
@@ -27,21 +26,46 @@ module.exports = {
     }
 
     this.app = app;
- },
+  },
 
-  postprocessTree(type, appTree) {
-    this._super.postprocessTree.apply(this, arguments);
+  postprocessTree(type, tree) {
+    if (type !== 'all') {
+      return tree;
+    }
+
+    return this._prerenderTree(tree);
+  },
+
+  /**
+   * This function is *not* called by ember-cli directly, but supposed to be imported by an app to wrap the app's
+   * tree, to add the prerendered HTML files. This workaround is currently needed for Embroider-based builds that
+   * don't support the `postprocessTree('all', tree)` hook used here.
+   */
+  prerender(app, tree) {
+    let storybookAddon = app.project.addons.find(
+      ({ name }) => name === '@storybook/ember-cli-storybook'
+    );
+
+    if (!storybookAddon) {
+      throw new Error(
+        "Could not find initialized ember-cli-storybook addon. It must be part of your app's dependencies!"
+      );
+    }
+
+    return storybookAddon._prerenderTree(tree);
+  },
+
+  _prerenderTree(tree) {
     let options = this._getOptions();
+    if (!options.enableAddonDocsIntegration) {
+      return tree;
+    }
 
     let componentFilePathPatterns = options.componentFilePathPatterns || [
       'app/components/*.js',
       'lib/**/addon/components/*.js',
       'addon/components/*.js',
     ];
-
-    if (type !== 'all' || !options.enableAddonDocsIntegration) {
-      return appTree;
-    }
 
     let componentJS = new Funnel('.', {
       include: componentFilePathPatterns,
@@ -57,10 +81,17 @@ module.exports = {
       packages: [ this.project.name() ]
     });
 
-    return mergeTrees([
-      appTree,
-      componentDocsTree,
-    ]);
+    let Merge = require('broccoli-merge-trees');
+
+    return new Merge(
+      [
+        tree,
+        componentDocsTree,
+      ],
+      {
+        overwrite: true,
+      }
+    );
   },
 
   outputReady: function(result) {
