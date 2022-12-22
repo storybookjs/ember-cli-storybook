@@ -41,7 +41,18 @@ jobs:
     strategy:
       matrix:
         node-version: [ 16.17.x ]
-        ember: [lts-3.28, lts-3.24, 4.1, release, beta, canary, default-with-jquery, classic]
+        ember: [
+          ember-lts-3.28,
+          ember-lts-3.24,
+          ember-4.1,
+          ember-release,
+          ember-beta,
+          ember-canary,
+          ember-default-with-jquery,
+          ember-classic,
+          embroider-safe,
+          embroider-optimized
+        ]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -50,5 +61,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm install
-      - name: Run tests for ember-${{ matrix.ember }}
-        run: ./node_modules/.bin/ember try:one ember-${{ matrix.ember }}
+      - name: Run tests for ${{ matrix.ember }}
+        run: ./node_modules/.bin/ember try:one ${{ matrix.ember }}
