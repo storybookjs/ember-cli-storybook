@@ -1,5 +1,8 @@
 # Unreleased
 
+# 0.6.1 (08/16/203)
+- [Insert the global ember import on production build](https://github.com/storybookjs/ember-cli-storybook/pull/183)
+
 # 0.6.0 (05/23/2022)
 
 - [Updates Ember scenario to have latest LTS version and test against Ember4](https://github.com/storybookjs/ember-cli-storybook/pull/113)
