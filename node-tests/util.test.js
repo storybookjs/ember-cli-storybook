@@ -186,6 +186,14 @@ Object {
       expect(generatePreviewHead(parse(fileContent))).toMatchSnapshot()
     })
 
+    it('should work with file created with `ember build` in production env', () => {
+      expect.assertions(1);
+
+      const fileContent = fs.readFileSync(path.resolve(__dirname, 'fixtures', 'build-production.html'), 'utf8');
+
+      expect(generatePreviewHead(parse(fileContent))).toMatchSnapshot()
+    })
+
     it('should work with file created with `ember serve` (should append livereload pointing at serve instance)', () => {
       expect.assertions(1);
 
